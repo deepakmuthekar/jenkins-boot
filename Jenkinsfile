@@ -11,7 +11,7 @@ pipeline {
             steps('Checkout Code') {
                 git 'https://github.com/deepakmuthekar/jenkins-boot.git'
                 
-				sh "gradle clean build"
+				sh 'gradle clean build'
 	         }
         }
         
@@ -25,14 +25,10 @@ pipeline {
         }
         
         stage('Quality Gate') {
-        	steps("Quality Gate"){
-          	  timeout(time: 1, unit: 'HOURS') {
-	              def qg = waitForQualityGate()
-	              if (qg.status != 'OK') {
-	                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-	              }
-	          }
-      		}          
+        	steps {
+            	timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+            }       
         }
 
 
