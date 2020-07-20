@@ -16,7 +16,6 @@ pipeline {
         }
         
         stage('Sonarqube analysis') {
-            
             steps {
                 withSonarQubeEnv('sonar') {
                  sh 'gradle sonarqube'
@@ -27,10 +26,9 @@ pipeline {
         stage('Quality Gate') {
         	steps {
             	timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-            }       
-        }
-
-
-    }
+                	waitForQualityGate abortPipeline: true
+            	}       
+            }
+    	}
+	}
 }
