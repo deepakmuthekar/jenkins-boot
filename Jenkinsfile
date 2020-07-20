@@ -9,16 +9,22 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
+            steps('Checkout Code') {
                 git 'https://github.com/deepakmuthekar/jenkins-boot.git'
+	         }
+	         
+	         steps('Build Code') {
                 sh "gradle clean build"
 	         }
-
+			
             post {
                 success {
                     echo 'Everything done...'  
                 }
             }
         }
+        
+      
+      
     }
 }
